@@ -20,6 +20,12 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
+    public void create(UserRequest userDto) {
+        UserEntity userEntity = userMapper.toUserEntity(userDto);
+        userRepository.save(userEntity);
+    }
+
+    @Override
     public Optional<UserResponse> getByFin(String fin) {
         UserEntity userEntity = userRepository.findByFin(fin)
                 .orElseThrow(() -> new UserNotFoundException("User not found with fin: " + fin));
@@ -41,7 +47,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
-        userEntity.setFullName(userDto.fullName());
+        userEntity.setFullName(userDto.getFullName());
         userRepository.save(userEntity);
 
         return userMapper.toUserDto(userEntity);

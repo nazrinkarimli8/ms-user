@@ -16,5 +16,6 @@ public interface UserMapper {
     @Mapping(source = "fin", target = "fin")
     @Mapping(source = "fullName", target = "fullName")
     @Mapping(source= "password", target = "password")
+    @Mapping(source= "email", target = "email")
     UserResponse toUserDto(UserEntity userEntity);
 }

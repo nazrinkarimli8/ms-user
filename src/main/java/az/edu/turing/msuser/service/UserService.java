@@ -6,6 +6,9 @@ import az.edu.turing.msuser.model.dto.UserResponse;
 import java.util.Optional;
 
 public interface UserService {
+
+    void create(UserRequest userDto);
+
     void deleteAll();
 
     void deleteById(Long id);

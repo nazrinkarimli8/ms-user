@@ -4,17 +4,28 @@ import az.edu.turing.msuser.model.dto.UserRequest;
 import az.edu.turing.msuser.model.dto.UserResponse;
 import az.edu.turing.msuser.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
+
+    @PostMapping("/save")
+    public ResponseEntity<String> createUser(@RequestBody UserRequest userRequest) {
+        userService.create(userRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully.");
+    }
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.status(HttpStatus.OK).body("Test");
+    }
 
     @GetMapping("/{fin}")
     public ResponseEntity<Optional<UserResponse>> getUserByFin(@PathVariable("fin") String fin) {
